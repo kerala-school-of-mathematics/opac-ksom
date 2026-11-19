@@ -941,6 +941,140 @@
       transform: translateX(3px);
     }
 
+    /* === Schedule & Working Hours Arrangements === */
+    .schedule-main-badge {
+      background: linear-gradient(135deg, rgba(0, 43, 69, 0.05) 0%, rgba(0, 92, 151, 0.08) 100%);
+      border: 1px solid rgba(0, 92, 151, 0.2);
+      border-radius: var(--radius-md);
+      padding: 0.95rem 1.15rem;
+      margin-bottom: 1.15rem;
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    [data-theme="dark"] .schedule-main-badge {
+      background: linear-gradient(135deg, rgba(13, 25, 39, 0.85) 0%, rgba(0, 92, 151, 0.18) 100%);
+      border-color: rgba(56, 189, 248, 0.28);
+    }
+
+    .schedule-main-time {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--primary-navy);
+      line-height: 1.25;
+    }
+
+    [data-theme="dark"] .schedule-main-time {
+      color: #38bdf8;
+    }
+
+    .schedule-main-note {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 0.15rem;
+    }
+
+    .schedule-section-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--accent-gold);
+      margin: 1rem 0 0.45rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .breaks-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.55rem;
+      margin-bottom: 0.95rem;
+    }
+
+    @media (max-width: 580px) {
+      .breaks-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .break-item-card {
+      background: var(--bg-card-subtle);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 0.6rem 0.5rem;
+      text-align: center;
+    }
+
+    .break-item-title {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 0.15rem;
+    }
+
+    .break-item-time {
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: var(--primary-navy);
+    }
+
+    [data-theme="dark"] .break-item-time {
+      color: #ffffff;
+    }
+
+    .break-item-duration {
+      font-size: 0.7rem;
+      color: var(--text-light);
+    }
+
+    .holiday-chips-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 0.95rem;
+    }
+
+    .holiday-chip {
+      font-size: 0.76rem;
+      font-weight: 600;
+      padding: 0.22rem 0.6rem;
+      background: var(--bg-card-subtle);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-pill);
+      color: var(--text-muted);
+    }
+
+    .on-demand-alert {
+      background: rgba(207, 168, 59, 0.08);
+      border: 1px solid rgba(207, 168, 59, 0.35);
+      border-radius: var(--radius-md);
+      padding: 0.8rem 0.95rem;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 1.15rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+    }
+
+    .on-demand-alert-icon {
+      color: var(--accent-gold);
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    [data-theme="dark"] .on-demand-alert {
+      background: rgba(207, 168, 59, 0.12);
+      border-color: rgba(207, 168, 59, 0.4);
+      color: #cbd5e1;
+    }
+
     /* =========================================
        Direct Koha OPAC Access Banner
        ========================================= */
@@ -1430,18 +1564,68 @@
           </ul>
         </div>
 
-        <!-- Working Hours & Quick Links -->
+        <!-- Working Hours & Arrangements -->
         <div class="info-box">
           <h3 class="info-box-title">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent-gold);"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-            <span>Hours & Quick Resources</span>
+            <span>Library Working Hours &amp; Schedule</span>
           </h3>
-          
+
+          <!-- Primary Working Hours Badge -->
+          <div class="schedule-main-badge">
+            <div style="font-size: 1.8rem; line-height: 1;" aria-hidden="true">🕒</div>
+            <div>
+              <div class="schedule-main-time">10:00 AM – 12:00 Midnight</div>
+              <div class="schedule-main-note">Daily operations (including Sundays and Public Holidays)</div>
+            </div>
+          </div>
+
+          <!-- Staff Duty Breaks -->
+          <div class="schedule-section-label">
+            <span>Staff Duty Break Intervals:</span>
+          </div>
+          <div class="breaks-grid">
+            <div class="break-item-card">
+              <div class="break-item-title">🥪 Lunch</div>
+              <div class="break-item-time">13:00 – 14:00</div>
+              <div class="break-item-duration">(1 hour)</div>
+            </div>
+            <div class="break-item-card">
+              <div class="break-item-title">☕ Evening Tea</div>
+              <div class="break-item-time">16:00 – 17:00</div>
+              <div class="break-item-duration">(1 hour)</div>
+            </div>
+            <div class="break-item-card">
+              <div class="break-item-title">🍽️ Dinner</div>
+              <div class="break-item-time">20:00 – 21:30</div>
+              <div class="break-item-duration">(1½ hours)</div>
+            </div>
+          </div>
+
+          <!-- Observed Holidays -->
+          <div class="schedule-section-label">
+            <span>Observed Annual Holidays (7 Days):</span>
+          </div>
+          <div class="holiday-chips-wrap">
+            <span class="holiday-chip">1. Vishu</span>
+            <span class="holiday-chip">2. Uthradam</span>
+            <span class="holiday-chip">3. Thiruvonam</span>
+            <span class="holiday-chip">4. Mahanavami</span>
+            <span class="holiday-chip">5. Deepavali</span>
+            <span class="holiday-chip">6. Christmas</span>
+            <span class="holiday-chip">7. Eid-al-fitr</span>
+          </div>
+
+          <!-- User On-Demand Extended Policy Callout -->
+          <div class="on-demand-alert">
+            <span class="on-demand-alert-icon">💡</span>
+            <div>
+              <strong>User Facility On-Demand:</strong> If there is a demand from users, the library facility shall be made available on all the above-mentioned holidays as well as till <strong>2:00 AM on any day</strong>.
+            </div>
+          </div>
+
+          <!-- Campus & Contact Details -->
           <ul class="info-list" style="margin-bottom: 1.4rem;">
-            <li class="info-list-item">
-              <span class="info-list-icon">&#9200;</span>
-              <span><strong>Working Hours:</strong> Monday – Friday: 9:00 AM – 5:30 PM</span>
-            </li>
             <li class="info-list-item">
               <span class="info-list-icon">&#128205;</span>
               <span><strong>Location:</strong> KSoM Campus, Kunnamangalam, Kozhikode, Kerala 673571</span>
