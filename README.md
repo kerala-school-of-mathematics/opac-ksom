@@ -11,7 +11,7 @@ Official single-page portal for the **Online Public Access Catalogue (OPAC)** of
 
 ## Overview
 
-The Kerala School of Mathematics (KSoM), an autonomous institute under the Kerala State Council for Science, Technology and Environment (KSCSTE), Government of Kerala, houses a comprehensive collection of advanced research literature in pure and applied mathematics.
+The Kerala School of Mathematics (KSoM), an autonomous institution jointly established by the Science & Technology Department, Government of Kerala and the Department of Atomic Energy, Government of India, houses a comprehensive collection of advanced research literature in pure and applied mathematics.
 
 This repository hosts the clean, modern, and responsive landing portal connecting researchers, faculty, students, and visitors directly to the institutional Koha Integrated Library System (ILS) and OPAC.
 
