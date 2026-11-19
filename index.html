@@ -1570,7 +1570,7 @@
           <span class="search-card-badge">Koha Integrated Search</span>
         </div>
 
-        <form class="opac-search-form" id="kohaSearchForm" action="http://210.212.228.235/cgi-bin/koha/opac-search.pl" method="GET" target="_blank" rel="noopener noreferrer">
+        <form class="opac-search-form" id="kohaSearchForm" onsubmit="event.preventDefault();">
           <div class="form-inputs-row">
             <select name="idx" id="searchIndexSelect" class="search-index-select" aria-label="Search filter index">
               <option value="">Library Catalog (All)</option>
@@ -1943,18 +1943,55 @@
       }
     });
 
-    // Subject Filter Quick-Click Handler
+    // Subject Filter & Search Handler (Prevents mixed-content insecure form submission warning)
     const searchInput = document.getElementById('searchQueryInput');
     const searchForm = document.getElementById('kohaSearchForm');
     const indexSelect = document.getElementById('searchIndexSelect');
     const subjectButtons = document.querySelectorAll('.subject-pill');
+
+    function executeOpacSearch(query, index) {
+      const q = (query !== undefined ? query : searchInput.value || '').trim();
+      if (!q) {
+        searchInput.focus();
+        return;
+      }
+      const idx = (index !== undefined ? index : indexSelect.value || '').trim();
+
+      // Check if accessing through reverse proxy or direct IP
+      let baseUrl = 'http://210.212.228.235/cgi-bin/koha/opac-search.pl';
+      if (window.location.pathname.startsWith('/opac') || window.location.pathname.startsWith('/cgi-bin')) {
+        baseUrl = '/cgi-bin/koha/opac-search.pl';
+      }
+
+      const params = new URLSearchParams();
+      if (idx) {
+        params.append('idx', idx);
+      }
+      params.append('q', q);
+
+      const targetUrl = baseUrl + '?' + params.toString();
+
+      // Programmatic link navigation avoids browser's insecure form submission warning
+      const navLink = document.createElement('a');
+      navLink.href = targetUrl;
+      navLink.target = '_blank';
+      navLink.rel = 'noopener noreferrer';
+      document.body.appendChild(navLink);
+      navLink.click();
+      document.body.removeChild(navLink);
+    }
+
+    searchForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      executeOpacSearch();
+    });
 
     subjectButtons.forEach(btn => {
       btn.addEventListener('click', () => {
         const query = btn.getAttribute('data-query');
         searchInput.value = query;
         indexSelect.value = 'su'; // Set index to Subject
-        searchForm.submit();
+        executeOpacSearch(query, 'su');
       });
     });
   </script>
