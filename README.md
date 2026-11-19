@@ -43,19 +43,43 @@ opac/
 
 ---
 
-## Local Development & Preview
+## Local Development & Reverse Proxy
 
-You can open `index.html` directly in any web browser, or serve it using any static HTTP server:
+### 1. Running the Integrated Reverse Proxy (Hides Backend IP)
+
+Run the included zero-dependency Node.js reverse proxy:
+
+```bash
+node proxy.js
+```
+
+This serves:
+- **Landing Portal**: `http://localhost:8000/`
+- **Proxied Koha OPAC**: `http://localhost:8000/cgi-bin/koha/opac-main.pl`
+
+The proxy automatically forwards requests to the Koha server at `210.212.228.235:80` with the `opac.ksom.res.in` VirtualHost header and rewrites all redirect locations, hiding the IP address from the browser address bar.
+
+### 2. Static Server Only
 
 ```bash
 # Using Python
-python -m http.server 8080
-
-# Using Node.js npx serve
-npx serve .
+python -m http.server 8000
 ```
 
-Then visit `http://localhost:8080`.
+---
+
+## Production Reverse Proxy (Hiding the IP in Production)
+
+### Option A: Cloudflare (Recommended — Domain is already on Cloudflare)
+1. In Cloudflare Dashboard for `ksom.res.in`, go to **Rules** &rarr; **Configuration Rules** (or **Page Rules**).
+2. Create a rule for `opac.ksom.res.in/*`.
+3. Set **SSL/TLS Encryption** to **Flexible**.
+   *(Because the Koha origin server listens on HTTP port 80, this allows Cloudflare to present full HTTPS to users while connecting to the backend over port 80, hiding the IP address completely).*
+
+Alternatively, deploy the included Cloudflare Worker in `cloudflare/worker.js`.
+
+### Option B: Nginx Reverse Proxy
+Deploy the configuration from `nginx/opac.ksom.res.in.conf` to your reverse proxy server.
 
 ---
 

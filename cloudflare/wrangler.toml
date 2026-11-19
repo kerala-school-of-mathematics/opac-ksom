@@ -1,0 +1,8 @@
+name = "ksom-opac-proxy"
+main = "worker.js"
+compatibility_date = "2026-11-19"
+
+# Bind this worker to your domain route in Cloudflare:
+# routes = [
+#   { pattern = "opac.ksom.res.in/*", zone_name = "ksom.res.in" }
+# ]
